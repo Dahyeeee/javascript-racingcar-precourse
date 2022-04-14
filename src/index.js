@@ -5,8 +5,7 @@ function checkValidity(event){
     event.preventDefault();
     const carnamesstring = document.querySelector('#car-names-input').value;
     const carnamesarr = carnamesstring.split(',');
-    const regex = /.+\,.+\,.+\,.+/
-    if(carnamesstring !== regex){
+    if(!carnamesstring.includes(',')){
         alert( "You need to type , between cars' names.")
     }
     else if(!carnamesarr.every((item)=>item.length <= 5)){
@@ -41,7 +40,6 @@ class Cars{
 
     accumlatedScore(round){
         return this.scores.slice(0,round+1).join('');
-  //      return scroeWithRound.reduce((acc,val)=>acc+val,0);
     }
 }
 
@@ -70,14 +68,14 @@ function findWinner(result){
         finalScores.push(car.scores);
     }
     let max = finalScores[0].length;
-    let winners = ''
+    let winners = []
     finalScores.forEach((item)=> max = Math.max(max, item.length));
     for(let i=0; i<result.length ; i++){
         if(finalScores[i].length === max){
-        winners += `${result[i].name} `;
+        winners.push(`${result[i].name}`);
         }
     }
-    return winners;
+    return winners.join(', ');
 }
 
 const onScreen = document.querySelector('#result');
